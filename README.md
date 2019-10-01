@@ -1,6 +1,7 @@
 Application in progress.
 
-REST API for a system that supports library books. Basic REST services:
+REST API for a system that supports library books. 
+Basic REST services:
 •	adding of the reader,
 •	adding a title of book,
 •	adding a copy of book,
