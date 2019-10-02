@@ -9,9 +9,10 @@ import java.time.LocalDate;
 @Getter
 @AllArgsConstructor
 @Data
-public class User {
+public class BookHire {
     private Long id;
-    private String name;
-    private String lastName;
-    private LocalDate createdAccount;
+    private Long idUser;
+    private LocalDate rentBook;
+    private LocalDate returnBook;
+
 }

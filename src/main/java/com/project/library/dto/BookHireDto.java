@@ -1,4 +1,4 @@
-package com.project.library.domain;
+package com.project.library.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,9 +9,9 @@ import java.time.LocalDate;
 @Getter
 @AllArgsConstructor
 @Data
-public class User {
+public class BookHireDto {
     private Long id;
-    private String name;
-    private String lastName;
-    private LocalDate createdAccount;
+    private Long idUser;
+    private LocalDate rentBook;
+    private LocalDate returnBook;
 }
