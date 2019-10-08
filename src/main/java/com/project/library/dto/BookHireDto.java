@@ -1,17 +1,20 @@
-//package com.project.library.dto;
-//
-//import lombok.AllArgsConstructor;
-//import lombok.Data;
-//import lombok.Getter;
-//
-//import java.time.LocalDate;
-//
-//@Getter
-//@AllArgsConstructor
-//@Data
-//public class BookHireDto {
-//    private Long id;
-//    private Long idUser;
-//    private LocalDate rentBook;
-//    private LocalDate returnBook;
-//}
+package com.project.library.dto;
+
+        import com.project.library.domain.BookCopy;
+        import com.project.library.domain.User;
+        import lombok.AllArgsConstructor;
+        import lombok.Data;
+        import lombok.Getter;
+
+        import java.time.LocalDate;
+
+@Getter
+@AllArgsConstructor
+@Data
+public class BookHireDto {
+    private Long id;
+    private User userId;
+    private BookCopy bookCopyId;
+    private LocalDate rentBook;
+    private LocalDate returnBook;
+}
