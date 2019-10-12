@@ -18,18 +18,18 @@ public class UserMapper {
 //        );
 //    }
 
-//    public UserDto mapToUserDto(final User user) {
-//        return new UserDto(
-//                user.getId(),
-//                user.getName(),
-//                user.getLastName(),
-//                user.getCreatedAccount()
-//        );
-//    }
-//
-//    public List<UserDto> mapToUserDtoList(final List<User> userList) {
-//        return userList.stream()
-//                .map(u -> new UserDto(u.getId(), u.getName(), u.getLastName(), u.getCreatedAccount()))
-//                .collect(Collectors.toList());
-//    }
+    public UserDto mapToUserDto(final User user) {
+        return new UserDto(
+                user.getId(),
+                user.getName(),
+                user.getLastName(),
+                user.getCreatedAccount()
+        );
+    }
+
+    public List<UserDto> mapToUserDtoList(final List<User> userList) {
+        return userList.stream()
+                .map(u -> new UserDto(u.getId(), u.getName(), u.getLastName(), u.getCreatedAccount()))
+                .collect(Collectors.toList());
+    }
 }

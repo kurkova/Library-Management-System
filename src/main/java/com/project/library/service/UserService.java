@@ -7,9 +7,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
-@Transactional
 public class UserService {
     @Autowired
     private UserRepository userRepository;
@@ -20,5 +20,9 @@ public class UserService {
 
     public User saveUser(final User user){
         return userRepository.save(user);
+    }
+
+    public Optional<User> getUser (final Long id){
+        return userRepository.findById(id);
     }
 }
