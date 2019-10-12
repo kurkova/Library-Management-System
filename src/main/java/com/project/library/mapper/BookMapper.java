@@ -1,10 +1,10 @@
 package com.project.library.mapper;
-
 import com.project.library.domain.BookCopy;
+import com.project.library.domain.BookHire;
 import com.project.library.domain.BookTitle;
 import com.project.library.dto.BookCopyDto;
+import com.project.library.dto.BookHireDto;
 import com.project.library.dto.BookTitleDto;
-import com.project.library.repository.BookTitleRepository;
 import com.project.library.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -24,7 +24,6 @@ public class BookMapper {
 //                bookTitleDto.getTitle(),
 //                bookTitleDto.getAuthor(),
 //                bookTitleDto.getYearOfPublication(),
-//
 //        );
 //    }
 
@@ -65,4 +64,29 @@ public class BookMapper {
                 .collect(Collectors.toList());
     }
 
+    public BookHire mapToBookHire (final BookHireDto bookHireDto){
+        return new BookHire(
+                bookHireDto.getId(),
+                bookHireDto.getUserId(),
+                bookHireDto.getBookCopyId(),
+                bookHireDto.getRentalDate(),
+                bookHireDto.getReturnDate()
+        );
+    }
+
+    public BookHireDto mapToBookHireDto (final BookHire bookHire){
+        return new BookHireDto(
+                bookHire.getId(),
+                bookHire.getUserId(),
+                bookHire.getBookCopyId(),
+                bookHire.getRentalDate(),
+                bookHire.getReturnDate()
+        );
+    }
+
+    public List<BookHireDto> mapToBookHireDto (final List<BookHire> bookHireList){
+        return bookHireList.stream()
+                .map(b -> new BookHireDto(b.getId(), b.getUserId(), b.getBookCopyId(), b.getRentalDate(), b.getReturnDate()))
+                .collect(Collectors.toList());
+    }
 }

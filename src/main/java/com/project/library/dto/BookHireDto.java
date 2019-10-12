@@ -15,6 +15,6 @@ public class BookHireDto {
     private Long id;
     private User userId;
     private BookCopy bookCopyId;
-    private LocalDate rentBook;
-    private LocalDate returnBook;
+    private LocalDate rentalDate;
+    private LocalDate returnDate;
 }
