@@ -32,4 +32,6 @@ public class UserMapper {
                 .map(u -> new UserDto(u.getId(), u.getName(), u.getLastName(), u.getCreatedAccount()))
                 .collect(Collectors.toList());
     }
+
+
 }
