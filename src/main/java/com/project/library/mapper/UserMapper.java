@@ -1,9 +1,7 @@
 package com.project.library.mapper;
 
-import com.project.library.domain.BookHire;
 import com.project.library.domain.User;
 import com.project.library.dto.UserDto;
-import com.project.library.repository.BookHireRepository;
 import com.project.library.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -41,9 +39,7 @@ public class UserMapper {
 
     public List<UserDto> mapToUserDtoList(final List<User> userList) {
         return userList.stream()
-                .map(u -> new UserDto(u.getId(), u.getName(), u.getLastName(), u.getCreatedAccount(), u.getBooksHire()))
+                .map(u-> new UserDto(u.getId(), u.getName(), u.getLastName(), u.getCreatedAccount(), bookMapper.mapToBookHireDtoList(u.getBooksHire())))
                 .collect(Collectors.toList());
     }
-
-
 }
