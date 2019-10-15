@@ -18,6 +18,7 @@ public class UserController {
 
     @RequestMapping(method = RequestMethod.POST, value = "/user", consumes = APPLICATION_JSON_VALUE )
     public void createUse (@RequestBody UserDto userDto){
+        userService.saveUser(userMapper.mapToUser(userDto));
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/users")

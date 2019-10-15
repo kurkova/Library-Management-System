@@ -6,6 +6,7 @@ import lombok.Getter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @AllArgsConstructor
@@ -15,7 +16,7 @@ public class UserDto {
     private String name;
     private String lastName;
     private LocalDate createdAccount;
-
+    private List<BookHireDto> bookHires;
 
 }
 
