@@ -1,15 +1,16 @@
 package com.project.library.service;
 
-import com.project.library.domain.BookCopy;
-import com.project.library.domain.BookHire;
-import com.project.library.domain.BookStatus;
-import com.project.library.domain.BookTitle;
-import com.project.library.repository.BookCopyRepository;
+import com.project.library.controller.BookNotFoundException;
+import com.project.library.controller.UserNotFoundException;
+import com.project.library.domain.*;
+
 import com.project.library.repository.BookHireRepository;
+import com.project.library.repository.BookRepository;
 import com.project.library.repository.BookTitleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,38 +20,69 @@ public class BookService {
     private BookTitleRepository bookTitleRepository;
 
     @Autowired
-    private BookCopyRepository bookCopyRepository;
+    private BookRepository bookRepository;
 
     @Autowired
     private BookHireRepository bookHireRepository;
+
+    @Autowired
+    private UserService userService;
+
 
     public BookTitle saveBookTitle (BookTitle bookTitle){
         return bookTitleRepository.save(bookTitle);
     }
 
-    public BookCopy saveBookCopy (BookCopy bookCopy){
-        return bookCopyRepository.save(bookCopy);
+    public Book saveBookCopy (Book bookCopy){
+        return bookRepository.save(bookCopy);
     }
 
 
-    public List<BookCopy> getAvailableBooksCopy (String title){
+    public List<Book> getAvailableBooksCopy (String title){
 
-        List<BookCopy> availableBooks = new ArrayList<>();
+        List<Book> availableBooks = new ArrayList<>();
         BookTitle  bookTitle = bookTitleRepository.findByTitile(title).orElse(null);
 
         if (bookTitle != null){
-            for (BookCopy bookCopy: bookTitle.getBooks()){
-                if (bookCopy.getBookStatus().equals(BookStatus.IN_LIBRARY)){
-                    availableBooks.add(bookCopy);
+            for (Book book: bookTitle.getBooks()){
+                if (book.getBookStatus().equals(BookStatus.IN_LIBRARY)){
+                    availableBooks.add(book);
                 }
 
             }
         }
-        return new ArrayList<>();
+        return availableBooks;
     }
 
     public List<BookHire> getUserBooksHire(Long userId, Long bookHireId){
          bookHireRepository.findUsersBookHire(userId, bookHireId);
          return new ArrayList<>();
+    }
+
+    public void rentBook(Long userId, Long bookId) throws  BookNotFoundException, UserNotFoundException{
+        Book book = bookRepository.findById(bookId).orElseThrow(BookNotFoundException::new);
+        User user = userService.getUser(userId).orElseThrow(UserNotFoundException::new);
+
+        if(book.getBookStatus().equals(BookStatus.IN_LIBRARY)){
+            BookHire bookHire = new BookHire();
+            bookHire.setBookId(book);
+            bookHire.setUserId(user);
+            bookHire.setRentalDate(LocalDate.now());
+            bookHire.setReturnDate(LocalDate.now().plusDays(60));
+            bookHireRepository.save(bookHire);
+            book.setBookStatus(BookStatus.LOANED);
+            bookRepository.save(book);
+        } else {
+            throw new BookNotFoundException();
+        }
+    }
+
+    public void returnBook(Long userId, BookStatus bookStatus, Long bookId) throws BookNotFoundException{
+        BookHire bookHire = bookHireRepository.findUsersBookHire(userId, bookId ).orElseThrow(BookNotFoundException::new);
+        Book book = bookHire.getBookId();
+        book.setBookStatus(bookStatus);
+        bookHire.setReturnDate(LocalDate.now());
+        bookRepository.save(book);
+        bookHireRepository.save(bookHire);
     }
 }

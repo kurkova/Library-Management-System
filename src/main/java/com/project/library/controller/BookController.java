@@ -1,47 +1,51 @@
 package com.project.library.controller;
 
-import com.project.library.dto.BookCopyDto;
+import com.project.library.domain.BookStatus;
+import com.project.library.dto.BookDto;
 import com.project.library.dto.BookTitleDto;
-import com.project.library.repository.BookCopyRepository;
+import com.project.library.mapper.BookMapper;
+
 import com.project.library.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
-@RequestMapping("/v1")
+@CrossOrigin(origins = "*")
+@RequestMapping("/v1/book")
 public class BookController {
     @Autowired
-    private BookCopyRepository bookCopyRepository;
+    private BookMapper bookMapper;
 
     @Autowired
     private BookService bookService;
 
-    @RequestMapping(method = RequestMethod.POST, value = "/add_BookTitle")
+    @RequestMapping(method = RequestMethod.POST, value = "/add_BookTitle", consumes = APPLICATION_JSON_VALUE)
     public void addBookTitle (BookTitleDto bookTitleDto){
+        bookService.saveBookTitle(bookMapper.mapToBookTitle(bookTitleDto));
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/add_BookCopy", consumes = APPLICATION_JSON_VALUE)
-    public void addBookCopy (@RequestBody BookCopyDto bookCopyDto){
-
+    public void addBookCopy (@RequestBody BookDto bookCopyDto){
+        bookService.saveBookCopy(bookMapper.mapToBook(bookCopyDto));
     }
 
-    public List<BookCopyDto> getAvailableBooks (String title){
-        return new ArrayList<>();
+    @RequestMapping(method =  RequestMethod.GET, value = "/getAvailableBooks")
+    public List<BookDto> getAvailableBooks (@RequestParam String title){
+        return bookMapper.mapToBookDtoList(bookService.getAvailableBooks(title));
     }
 
-    public void returnBook(Long id){
-
+    @RequestMapping(method = RequestMethod.PUT, value = "rentBook")
+    public void rentBook (@RequestParam Long userId, @RequestParam Long bookId) throws UserNotFoundException, BookNotFoundException{
+            bookService.rentBook(userId, bookId);
     }
 
-    public void updateStatusBook(Long id){
-
+    @RequestMapping(method = RequestMethod.PUT, value = "returnBook")
+    public void returnBook (@RequestParam Long userId, @RequestParam Long bookId, @RequestParam BookStatus bookStatus) throws BookNotFoundException{
+        bookService.returnBook(userId, bookId, bookStatus);
     }
+
 }
