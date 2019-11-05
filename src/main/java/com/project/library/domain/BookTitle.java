@@ -1,6 +1,7 @@
 package com.project.library.domain;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -9,6 +10,7 @@ import java.util.List;
 
 @Getter
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity(name = "bookTitles")
 public class BookTitle {
     @Id
@@ -25,9 +27,9 @@ public class BookTitle {
     private int yearOfPublication;
 
     @OneToMany(
-            targetEntity = BookCopy.class,
+            targetEntity = Book.class,
             mappedBy = "bookTitleId",
             fetch = FetchType.EAGER
     )
-    private List<BookCopy> books = new ArrayList<>();
+    private List<Book> books;
 }

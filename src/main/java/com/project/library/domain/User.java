@@ -3,15 +3,17 @@ package com.project.library.domain;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
+
 import java.util.List;
 
 @Getter
 @AllArgsConstructor
+@NoArgsConstructor
 @Data
 @Entity(name = "users")
 public class User {
@@ -34,6 +36,6 @@ public class User {
             mappedBy = "userId",
             fetch = FetchType.EAGER
     )
-    private List<BookHire> booksHire = new ArrayList<>();
+    private List<BookHire> booksHire;
 
 }

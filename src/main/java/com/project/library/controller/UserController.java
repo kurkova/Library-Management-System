@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import java.util.List;
 
-
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/v1")
 public class UserController {
     @Autowired

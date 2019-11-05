@@ -1,14 +1,14 @@
 package com.project.library.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 
+@Setter
 @Getter
 @AllArgsConstructor
+@NoArgsConstructor
 @Data
 @Entity(name = "book_hires")
 public class BookHire {
@@ -21,8 +21,8 @@ public class BookHire {
     private User userId;
 
     @ManyToOne
-    @JoinColumn(name = "bookCopy_id")
-    private BookCopy bookCopyId;
+    @JoinColumn(name = "book_id")
+    private Book bookId;
 
     @Column(name = "rental_date")
     private LocalDate rentalDate;

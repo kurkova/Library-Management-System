@@ -38,7 +38,7 @@ public class BookService {
     }
 
 
-    public List<Book> getAvailableBooksCopy (String title){
+    public List<Book> getAvailableBooks (String title){
 
         List<Book> availableBooks = new ArrayList<>();
         BookTitle  bookTitle = bookTitleRepository.findByTitile(title).orElse(null);
@@ -77,7 +77,7 @@ public class BookService {
         }
     }
 
-    public void returnBook(Long userId, BookStatus bookStatus, Long bookId) throws BookNotFoundException{
+    public void returnBook(Long userId, Long bookId, BookStatus bookStatus) throws BookNotFoundException{
         BookHire bookHire = bookHireRepository.findUsersBookHire(userId, bookId ).orElseThrow(BookNotFoundException::new);
         Book book = bookHire.getBookId();
         book.setBookStatus(bookStatus);

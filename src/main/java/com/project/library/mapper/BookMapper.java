@@ -1,9 +1,8 @@
 package com.project.library.mapper;
-
-import com.project.library.domain.BookCopy;
+import com.project.library.domain.Book;
 import com.project.library.domain.BookHire;
 import com.project.library.domain.BookTitle;
-import com.project.library.dto.BookCopyDto;
+import com.project.library.dto.BookDto;
 import com.project.library.dto.BookHireDto;
 import com.project.library.dto.BookTitleDto;
 import com.project.library.service.BookService;
@@ -35,34 +34,34 @@ public class BookMapper {
                 bookTitle.getTitle(),
                 bookTitle.getAuthor(),
                 bookTitle.getYearOfPublication(),
-                mapToBookCopyDtoList(bookTitle.getBooks())
+                mapToBookDtoList(bookTitle.getBooks())
         );
     }
 
-    public BookCopy maptToBookCopy(final BookCopyDto bookCopyDto) {
-        return new BookCopy(
-                bookCopyDto.getId(),
-                bookCopyDto.getBookTitleId(),
-                bookCopyDto.getBookStatusId(),
-                mapToBookHireList(bookCopyDto.getBookHires())
+    public Book maptToBookCopy(final BookDto bookDto) {
+        return new Book(
+                bookDto.getId(),
+                bookDto.getBookTitleId(),
+                bookDto.getBookStatusId(),
+                mapToBookHireList(bookDto.getBookHires())
         );
     }
 
-    public BookCopyDto mapToBookCopyDto(final BookCopy bookCopy) {
-        return new BookCopyDto(
-                bookCopy.getId(),
-                bookCopy.getBookTitleId(),
-                bookCopy.getBookStatus(),
-                mapToBookHireDtoList(bookCopy.getBookHires())
+    public BookDto mapToBookDto(final Book book) {
+        return new BookDto(
+                book.getId(),
+                book.getBookTitleId(),
+                book.getBookStatus(),
+                mapToBookHireDtoList(book.getBookHires())
         );
     }
 
-    public BookCopy mapToBookCopy(final BookCopyDto bookCopyDto) {
-        return new BookCopy(
-                bookCopyDto.getId(),
-                bookCopyDto.getBookTitleId(),
-                bookCopyDto.getBookStatusId(),
-                mapToBookHireList(bookCopyDto.getBookHires())
+    public Book mapToBook(final BookDto bookDto) {
+        return new Book(
+                bookDto.getId(),
+                bookDto.getBookTitleId(),
+                bookDto.getBookStatusId(),
+                mapToBookHireList(bookDto.getBookHires())
         );
     }
 
@@ -79,7 +78,7 @@ public class BookMapper {
 
     public List<BookHire> mapToBookHireList(final List<BookHireDto> bookHireDtoList) {
         return bookHireDtoList.stream()
-                .map(b -> new BookHire(b.getId(), b.getUserId(), b.getBookCopyId(), b.getRentalDate(), b.getReturnDate()))
+                .map(b -> new BookHire(b.getId(), b.getUserId(), b.getBookId(), b.getRentalDate(), b.getReturnDate()))
                 .collect(Collectors.toList());
     }
 
@@ -89,15 +88,15 @@ public class BookMapper {
                 .collect(Collectors.toList());
     }
 
-    public List<BookCopy> mapToListBookCopyList(final List<BookCopyDto> booksCopyDtoList) {
-        return booksCopyDtoList.stream()
-                .map(this::mapToBookCopy)
+    public List<Book> mapToBookList(final List<BookDto> booksDtoList) {
+        return booksDtoList.stream()
+                .map(this::mapToBook)
                 .collect(Collectors.toList());
     }
 
-    public List<BookCopyDto> mapToBookCopyDtoList(final List<BookCopy> booksCopyList) {
-        return booksCopyList.stream()
-                .map(this::mapToBookCopyDto)
+    public List<BookDto> mapToBookDtoList(final List<Book> booksList) {
+        return booksList.stream()
+                .map(this::mapToBookDto)
                 .collect(Collectors.toList());
     }
 
