@@ -3,17 +3,18 @@ package com.project.library.domain;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
 import java.util.List;
 
 @Getter
 @AllArgsConstructor
+@NoArgsConstructor
 @Data
-@Entity(name = "books_copy")
-public class BookCopy {
+@Entity(name = "books")
+public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -33,5 +34,6 @@ public class BookCopy {
             mappedBy = "bookCopyId",
             fetch = FetchType.EAGER
     )
-    private List<BookHire> bookHires = new ArrayList<>();
+    private List<BookHire> bookHires;
 }
+
