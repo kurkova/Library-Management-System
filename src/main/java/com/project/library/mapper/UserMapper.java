@@ -1,5 +1,7 @@
 package com.project.library.mapper;
 
+import com.project.library.controller.Exception.BookNotFoundException;
+import com.project.library.controller.Exception.UserNotFoundException;
 import com.project.library.domain.User;
 import com.project.library.dto.UserDto;
 import com.project.library.service.BookService;
@@ -11,14 +13,10 @@ import java.util.stream.Collectors;
 
 @Component
 public class UserMapper {
-
+    @Autowired
     private BookMapper bookMapper;
 
-    public UserMapper(BookMapper bookMapper) {
-        this.bookMapper = bookMapper;
-    }
-
-    public User mapToUser(final UserDto userDto)  {
+    public User mapToUser(final UserDto userDto) throws BookNotFoundException, UserNotFoundException {
         return new User(
                 userDto.getId(),
                 userDto.getName(),
@@ -40,7 +38,7 @@ public class UserMapper {
 
     public List<UserDto> mapToUserDtoList(final List<User> userList) {
         return userList.stream()
-                .map(u-> new UserDto(u.getId(), u.getName(), u.getLastName(), u.getCreatedAccount(), bookMapper.mapToBookHireDtoList(u.getBooksHire())))
+                .map(this::mapToUserDto)
                 .collect(Collectors.toList());
     }
 }

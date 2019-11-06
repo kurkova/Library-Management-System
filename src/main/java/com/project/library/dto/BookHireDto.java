@@ -5,14 +5,14 @@ import lombok.*;
 
 import java.time.LocalDate;
 
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
 @Data
 public class BookHireDto {
     private Long id;
-    private User userId;
-    private Book bookId;
+    private Long userId;
+    private Long bookId;
     private LocalDate rentalDate;
     private LocalDate returnDate;
 

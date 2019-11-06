@@ -1,4 +1,5 @@
 package com.project.library.controller;
+import com.project.library.controller.Exception.BookNotFoundException;
 import com.project.library.controller.Exception.UserNotFoundException;
 import com.project.library.dto.UserDto;
 import com.project.library.mapper.UserMapper;
@@ -10,15 +11,19 @@ import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping("/v1")
+@RequestMapping("/v1/user")
 public class UserController {
-    @Autowired
+
     private UserService userService;
-    @Autowired
     private UserMapper userMapper;
 
+    public UserController(UserService userService, UserMapper userMapper) {
+        this.userService = userService;
+        this.userMapper = userMapper;
+    }
+
     @RequestMapping(method = RequestMethod.POST, value = "/user", consumes = APPLICATION_JSON_VALUE )
-    public void createUse (@RequestBody UserDto userDto){
+    public void addUser (@RequestBody UserDto userDto) throws UserNotFoundException, BookNotFoundException {
         userService.saveUser(userMapper.mapToUser(userDto));
     }
 
@@ -29,7 +34,7 @@ public class UserController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/user")
     public UserDto getUser (@RequestParam Long idUser) throws UserNotFoundException {
-        return userMapper.mapToUserDto(userService.getUser(idUser).orElseThrow(UserNotFoundException::new));
+        return userMapper.mapToUserDto(userService.getUser(idUser));
     }
 }
 

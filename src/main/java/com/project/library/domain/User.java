@@ -12,16 +12,16 @@ import java.time.LocalDate;
 
 import java.util.List;
 
-
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
 @Data
 @Entity(name = "users")
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private Long id;
 
     @NotNull

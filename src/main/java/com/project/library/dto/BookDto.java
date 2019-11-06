@@ -9,30 +9,15 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
+@Data
 public class BookDto {
     private Long id;
-    private BookTitle bookTitleId;
+    private Long bookTitleId;
     private BookStatus bookStatusId;
     private List<BookHireDto> bookHires;
 
-    public Long getId() {
-        return id;
-    }
-
-    public BookTitle getBookTitleId() {
-        return bookTitleId;
-    }
-
-    public BookStatus getBookStatusId() {
-        return bookStatusId;
-    }
-
-    public List<BookHireDto> getBookHires() {
-        return bookHires;
-    }
 
 }

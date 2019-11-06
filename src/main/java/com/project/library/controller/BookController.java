@@ -1,6 +1,7 @@
 package com.project.library.controller;
 
 import com.project.library.controller.Exception.BookNotFoundException;
+import com.project.library.controller.Exception.BookTitleNotFoundException;
 import com.project.library.controller.Exception.UserNotFoundException;
 import com.project.library.domain.BookStatus;
 import com.project.library.dto.BookDto;
@@ -19,20 +20,23 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @CrossOrigin(origins = "*")
 @RequestMapping("/v1/book")
 public class BookController {
-    @Autowired
-    private BookMapper bookMapper;
 
-    @Autowired
+    private BookMapper bookMapper;
     private BookService bookService;
+
+    public BookController(BookMapper bookMapper, BookService bookService) {
+        this.bookMapper = bookMapper;
+        this.bookService = bookService;
+    }
 
     @RequestMapping(method = RequestMethod.POST, value = "/add_BookTitle", consumes = APPLICATION_JSON_VALUE)
     public void addBookTitle (BookTitleDto bookTitleDto){
-        bookService.saveBookTitle(bookMapper.mapToBookTitle(bookTitleDto));
+        bookService.addBookTitle(bookMapper.mapToBookTitle(bookTitleDto));
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/add_BookCopy", consumes = APPLICATION_JSON_VALUE)
-    public void addBook (@RequestBody BookDto bookCopyDto) throws BookNotFoundException, UserNotFoundException {
-        bookService.saveBookCopy(bookMapper.mapToBook(bookCopyDto));
+    public void addBook (@RequestBody BookDto bookCopyDto) throws BookNotFoundException, UserNotFoundException, BookTitleNotFoundException {
+        bookService.saveBook(bookMapper.mapToBook(bookCopyDto));
     }
 
     @RequestMapping(method =  RequestMethod.GET, value = "/getAvailableBooks")

@@ -6,22 +6,23 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
 @Data
 @Entity(name = "book_hires")
 public class BookHire {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private Long id;
 
-    @NotNull
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User userId;
 
-    @NotNull
+
     @ManyToOne
     @JoinColumn(name = "book_id")
     private Book bookId;
