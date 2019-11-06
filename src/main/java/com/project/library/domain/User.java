@@ -7,13 +7,15 @@ import lombok.NoArgsConstructor;
 
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 import java.util.List;
 
-@Getter
-@AllArgsConstructor
+
 @NoArgsConstructor
+@AllArgsConstructor
+@Getter
 @Data
 @Entity(name = "users")
 public class User {
@@ -22,12 +24,15 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @NotNull
     @Column(name = "name")
     private String name;
 
+    @NotNull
     @Column(name = "lastName")
     private String lastName;
 
+    @NotNull
     @Column (name = "createdAccountData")
     private LocalDate createdAccount;
 

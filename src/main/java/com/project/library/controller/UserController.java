@@ -1,4 +1,5 @@
 package com.project.library.controller;
+import com.project.library.controller.Exception.UserNotFoundException;
 import com.project.library.dto.UserDto;
 import com.project.library.mapper.UserMapper;
 import com.project.library.service.UserService;
@@ -27,7 +28,7 @@ public class UserController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/user")
-    public UserDto getUser (@RequestParam Long idUser) throws UserNotFoundException{
+    public UserDto getUser (@RequestParam Long idUser) throws UserNotFoundException {
         return userMapper.mapToUserDto(userService.getUser(idUser).orElseThrow(UserNotFoundException::new));
     }
 }

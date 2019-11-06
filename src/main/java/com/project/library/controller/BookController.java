@@ -1,5 +1,7 @@
 package com.project.library.controller;
 
+import com.project.library.controller.Exception.BookNotFoundException;
+import com.project.library.controller.Exception.UserNotFoundException;
 import com.project.library.domain.BookStatus;
 import com.project.library.dto.BookDto;
 import com.project.library.dto.BookTitleDto;
@@ -29,7 +31,7 @@ public class BookController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/add_BookCopy", consumes = APPLICATION_JSON_VALUE)
-    public void addBookCopy (@RequestBody BookDto bookCopyDto){
+    public void addBook (@RequestBody BookDto bookCopyDto) throws BookNotFoundException, UserNotFoundException {
         bookService.saveBookCopy(bookMapper.mapToBook(bookCopyDto));
     }
 
@@ -44,7 +46,7 @@ public class BookController {
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "returnBook")
-    public void returnBook (@RequestParam Long userId, @RequestParam Long bookId, @RequestParam BookStatus bookStatus) throws BookNotFoundException{
+    public void returnBook (@RequestParam Long userId, @RequestParam Long bookId, @RequestParam BookStatus bookStatus) throws BookNotFoundException, UserNotFoundException{
         bookService.returnBook(userId, bookId, bookStatus);
     }
 

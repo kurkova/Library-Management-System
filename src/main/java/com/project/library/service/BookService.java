@@ -1,7 +1,7 @@
 package com.project.library.service;
 
-import com.project.library.controller.BookNotFoundException;
-import com.project.library.controller.UserNotFoundException;
+import com.project.library.controller.Exception.BookNotFoundException;
+import com.project.library.controller.Exception.UserNotFoundException;
 import com.project.library.domain.*;
 
 import com.project.library.repository.BookHireRepository;
@@ -77,7 +77,7 @@ public class BookService {
         }
     }
 
-    public void returnBook(Long userId, Long bookId, BookStatus bookStatus) throws BookNotFoundException{
+    public void returnBook(Long userId, Long bookId, BookStatus bookStatus) throws BookNotFoundException, UserNotFoundException{
         BookHire bookHire = bookHireRepository.findUsersBookHire(userId, bookId ).orElseThrow(BookNotFoundException::new);
         Book book = bookHire.getBookId();
         book.setBookStatus(bookStatus);

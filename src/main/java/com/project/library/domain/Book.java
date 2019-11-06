@@ -10,8 +10,8 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Getter
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Data
 @Entity(name = "books")
 public class Book {
@@ -31,9 +31,10 @@ public class Book {
 
     @OneToMany(
             targetEntity = BookHire.class,
-            mappedBy = "bookCopyId",
+            mappedBy = "bookId",
             fetch = FetchType.EAGER
     )
     private List<BookHire> bookHires;
+
 }
 

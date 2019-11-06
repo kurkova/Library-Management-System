@@ -1,13 +1,13 @@
 package com.project.library.dto;
 import com.project.library.domain.Book;
 import com.project.library.domain.User;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
+import lombok.*;
+
 import java.time.LocalDate;
 
-@Getter
+@NoArgsConstructor
 @AllArgsConstructor
+@Getter
 @Data
 public class BookHireDto {
     private Long id;
@@ -15,4 +15,7 @@ public class BookHireDto {
     private Book bookId;
     private LocalDate rentalDate;
     private LocalDate returnDate;
+
+
+
 }

@@ -11,13 +11,14 @@ import java.util.stream.Collectors;
 
 @Component
 public class UserMapper {
-    @Autowired
-    BookService bookService;
 
-    @Autowired
-    BookMapper bookMapper;
+    private BookMapper bookMapper;
 
-    public User mapToUser(final UserDto userDto) {
+    public UserMapper(BookMapper bookMapper) {
+        this.bookMapper = bookMapper;
+    }
+
+    public User mapToUser(final UserDto userDto)  {
         return new User(
                 userDto.getId(),
                 userDto.getName(),

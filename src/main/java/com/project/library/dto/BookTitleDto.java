@@ -1,9 +1,13 @@
 package com.project.library.dto;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 import java.util.List;
 
 @Getter
+@NoArgsConstructor
 @AllArgsConstructor
 public class BookTitleDto {
     private Long id;
@@ -11,4 +15,6 @@ public class BookTitleDto {
     private String author;
     private  int yearOfPublication;
     private List<BookDto> booksCopy;
+
+
 }
