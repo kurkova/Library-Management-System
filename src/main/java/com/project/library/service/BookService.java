@@ -19,36 +19,36 @@ import java.util.List;
 @Service
 @Transactional
 public class BookService {
+
+    @Autowired
     private BookTitleRepository bookTitleRepository;
+
+    @Autowired
     private BookRepository bookRepository;
+
+    @Autowired
     private BookHireRepository bookHireRepository;
+
+    @Autowired
     private UserService userService;
 
-
-    public BookService(BookTitleRepository bookTitleRepository, BookRepository bookRepository, BookHireRepository bookHireRepository, UserService userService) {
-        this.bookTitleRepository = bookTitleRepository;
-        this.bookRepository = bookRepository;
-        this.bookHireRepository = bookHireRepository;
-        this.userService = userService;
-    }
-
-    public BookTitle addBookTitle (BookTitle bookTitle){
+    public BookTitle addBookTitle(BookTitle bookTitle) {
         return bookTitleRepository.save(bookTitle);
     }
 
-    public Book saveBook (Book book){
+    public Book saveBook(Book book) {
         return bookRepository.save(book);
     }
 
 
-    public List<Book> getAvailableBooks (String title){
+    public List<Book> getAvailableBooks(String title) {
 
         List<Book> availableBooks = new ArrayList<>();
-        BookTitle  bookTitle = bookTitleRepository.findByTitle(title).orElse(null);
+        BookTitle bookTitle = bookTitleRepository.findByTitle(title).orElse(null);
 
-        if (bookTitle != null){
-            for (Book book: bookTitle.getBooks()){
-                if (book.getBookStatus().equals(BookStatus.IN_LIBRARY)){
+        if (bookTitle != null) {
+            for (Book book : bookTitle.getBooks()) {
+                if (book.getBookStatus().equals(BookStatus.IN_LIBRARY)) {
                     availableBooks.add(book);
                 }
 
@@ -57,17 +57,17 @@ public class BookService {
         return availableBooks;
     }
 
-    public List<BookHire> getUserBooksHire(Long userId, Long bookHireId){
-         bookHireRepository.findUsersBookHire(userId, bookHireId);
-         return new ArrayList<>();
+    public List<BookHire> getUserBooksHire(Long userId, Long bookHireId) {
+        bookHireRepository.findUsersBookHire(userId, bookHireId);
+        return new ArrayList<>();
     }
 
-    public void rentBook(Long userId, Long bookId) throws  BookNotFoundException, UserNotFoundException{
+    public void rentBook(Long userId, Long bookId) throws BookNotFoundException, UserNotFoundException {
         Book book = bookRepository.findById(bookId).orElseThrow(BookNotFoundException::new);
         User user = userService.getUser(userId);
 
 
-        if(book.getBookStatus().equals(BookStatus.IN_LIBRARY)){
+        if (book.getBookStatus().equals(BookStatus.IN_LIBRARY)) {
             BookHire bookHire = new BookHire();
             bookHire.setBookId(book);
             bookHire.setUserId(user);
@@ -81,8 +81,8 @@ public class BookService {
         }
     }
 
-    public void returnBook(Long userId, Long bookId, BookStatus bookStatus) throws BookNotFoundException, UserNotFoundException{
-        BookHire bookHire = bookHireRepository.findUsersBookHire(userId, bookId ).orElseThrow(BookNotFoundException::new);
+    public void returnBook(Long userId, Long bookId, BookStatus bookStatus) throws BookNotFoundException, UserNotFoundException {
+        BookHire bookHire = bookHireRepository.findUsersBookHire(userId, bookId).orElseThrow(BookNotFoundException::new);
         Book book = bookHire.getBookId();
         book.setBookStatus(bookStatus);
         bookHire.setReturnDate(LocalDate.now());

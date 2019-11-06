@@ -1,5 +1,4 @@
 package com.project.library.controller;
-
 import com.project.library.controller.Exception.BookNotFoundException;
 import com.project.library.controller.Exception.BookTitleNotFoundException;
 import com.project.library.controller.Exception.UserNotFoundException;
@@ -7,13 +6,10 @@ import com.project.library.domain.BookStatus;
 import com.project.library.dto.BookDto;
 import com.project.library.dto.BookTitleDto;
 import com.project.library.mapper.BookMapper;
-
 import com.project.library.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
-
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
@@ -21,20 +17,18 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RequestMapping("/v1/book")
 public class BookController {
 
+    @Autowired
     private BookMapper bookMapper;
+
+    @Autowired
     private BookService bookService;
 
-    public BookController(BookMapper bookMapper, BookService bookService) {
-        this.bookMapper = bookMapper;
-        this.bookService = bookService;
-    }
-
-    @RequestMapping(method = RequestMethod.POST, value = "/add_BookTitle", consumes = APPLICATION_JSON_VALUE)
+    @RequestMapping(method = RequestMethod.POST, value = "/addBookTitle", consumes = APPLICATION_JSON_VALUE)
     public void addBookTitle (BookTitleDto bookTitleDto){
         bookService.addBookTitle(bookMapper.mapToBookTitle(bookTitleDto));
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/add_BookCopy", consumes = APPLICATION_JSON_VALUE)
+    @RequestMapping(method = RequestMethod.POST, value = "/addBookCopy", consumes = APPLICATION_JSON_VALUE)
     public void addBook (@RequestBody BookDto bookCopyDto) throws BookNotFoundException, UserNotFoundException, BookTitleNotFoundException {
         bookService.saveBook(bookMapper.mapToBook(bookCopyDto));
     }
@@ -53,5 +47,4 @@ public class BookController {
     public void returnBook (@RequestParam Long userId, @RequestParam Long bookId, @RequestParam BookStatus bookStatus) throws BookNotFoundException, UserNotFoundException{
         bookService.returnBook(userId, bookId, bookStatus);
     }
-
 }

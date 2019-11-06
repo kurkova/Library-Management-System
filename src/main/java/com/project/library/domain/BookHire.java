@@ -1,7 +1,5 @@
 package com.project.library.domain;
-
 import lombok.*;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
@@ -12,16 +10,15 @@ import java.time.LocalDate;
 @Data
 @Entity(name = "book_hires")
 public class BookHire {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Long id;
 
-
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User userId;
-
 
     @ManyToOne
     @JoinColumn(name = "book_id")

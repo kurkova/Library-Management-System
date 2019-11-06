@@ -1,4 +1,5 @@
 package com.project.library.mapper;
+
 import com.project.library.controller.Exception.BookNotFoundException;
 import com.project.library.controller.Exception.BookTitleNotFoundException;
 import com.project.library.controller.Exception.UserNotFoundException;
@@ -26,7 +27,6 @@ public class BookMapper {
     @Autowired
     private UserService userService;
 
-
     public BookTitle mapToBookTitle(final BookTitleDto bookTitleDto) {
         return new BookTitle(
                 bookTitleDto.getId(),
@@ -36,7 +36,6 @@ public class BookMapper {
                 bookService.getAvailableBooks(bookTitleDto.getTitle())
         );
     }
-
 
     public BookDto mapToBookDto(final Book book) {
         return new BookDto(
@@ -77,10 +76,10 @@ public class BookMapper {
     }
 
 
-    public List<BookHire> mapToBookHireList(final List<BookHireDto> booksHireDtoList) throws BookNotFoundException, UserNotFoundException  {
+    public List<BookHire> mapToBookHireList(final List<BookHireDto> booksHireDtoList) throws BookNotFoundException, UserNotFoundException {
         List<BookHire> booksHire = new ArrayList<>();
 
-        for(BookHireDto book : booksHireDtoList) {
+        for (BookHireDto book : booksHireDtoList) {
             booksHire.add(mapToBookHire(book));
         }
 
@@ -93,7 +92,6 @@ public class BookMapper {
                 .map(this::mapToBookHireDto)
                 .collect(Collectors.toList());
     }
-
 
     public List<BookDto> mapToBookDtoList(final List<Book> booksList) {
         return booksList.stream()

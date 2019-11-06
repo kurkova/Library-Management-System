@@ -4,12 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
-
 import java.util.List;
 
 @Getter
@@ -42,5 +39,4 @@ public class User {
             fetch = FetchType.EAGER
     )
     private List<BookHire> booksHire;
-
 }

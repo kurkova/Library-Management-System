@@ -14,25 +14,24 @@ import java.util.List;
 @RequestMapping("/v1/user")
 public class UserController {
 
+    @Autowired
     private UserService userService;
+
+    @Autowired
     private UserMapper userMapper;
 
-    public UserController(UserService userService, UserMapper userMapper) {
-        this.userService = userService;
-        this.userMapper = userMapper;
-    }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/user", consumes = APPLICATION_JSON_VALUE )
+    @RequestMapping(method = RequestMethod.POST, value = "/addUser", consumes = APPLICATION_JSON_VALUE )
     public void addUser (@RequestBody UserDto userDto) throws UserNotFoundException, BookNotFoundException {
         userService.saveUser(userMapper.mapToUser(userDto));
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/users")
+    @RequestMapping(method = RequestMethod.GET, value = "/getUsers")
     public List<UserDto> getUsers (){
        return  userMapper.mapToUserDtoList(userService.getAllUsers());
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/user")
+    @RequestMapping(method = RequestMethod.GET, value = "/getUser")
     public UserDto getUser (@RequestParam Long idUser) throws UserNotFoundException {
         return userMapper.mapToUserDto(userService.getUser(idUser));
     }

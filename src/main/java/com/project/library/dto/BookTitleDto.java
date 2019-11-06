@@ -3,7 +3,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
 import java.util.List;
 
 @Getter
@@ -16,6 +15,4 @@ public class BookTitleDto {
     private String author;
     private  int yearOfPublication;
     private List<BookDto> booksCopy;
-
-
 }
