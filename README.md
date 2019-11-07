@@ -1,12 +1,13 @@
-Application in progress.
+# LibraryManagementSystem
 
-REST API for a system that supports library books. 
-Basic REST services:
-•	adding of the reader,
-•	adding a title of book,
-•	adding a copy of book,
-•	checking the number of copies of a given title available to the equipment,
-•	borrowing a book,
-•	return of the book.
+Application which can be use as a system to manage books in university library. 
 
-Technologies: Java8, Spring Boot 8, Spring Web, Spring Security, Hibernate, JDBC, MySQL, H2
+## Technologies & Frameworks
+
+- [MySQL](https://www.mysql.com)
+- [Spring Boot](https://spring.io/projects/spring-boot)
+- [Hibernate](http://hibernate.org/)
+- [Lombok](https://projectlombok.org/)
+- [Gradle](https://gradle.org/)
+- [JUnit](https://maven.apache.org/)
+- [Mockito](http://site.mockito.org/)
