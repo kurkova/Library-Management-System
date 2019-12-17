@@ -1,5 +1,4 @@
 package com.project.library.mapper;
-
 import com.project.library.controller.Exception.BookNotFoundException;
 import com.project.library.controller.Exception.BookTitleNotFoundException;
 import com.project.library.controller.Exception.UserNotFoundException;
@@ -13,7 +12,6 @@ import com.project.library.service.BookService;
 import com.project.library.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,6 +24,7 @@ public class BookMapper {
 
     @Autowired
     private UserService userService;
+
 
     public BookTitle mapToBookTitle(final BookTitleDto bookTitleDto) {
         return new BookTitle(
@@ -40,7 +39,7 @@ public class BookMapper {
     public BookDto mapToBookDto(final Book book) {
         return new BookDto(
                 book.getId(),
-                book.getBookTitleId().getId(),
+                book.getBookTitle().getId(),
                 book.getBookStatus(),
                 mapToBookHireDtoList(book.getBookHires())
         );
@@ -49,7 +48,7 @@ public class BookMapper {
     public Book mapToBook(final BookDto bookDto) throws BookTitleNotFoundException, BookNotFoundException, UserNotFoundException {
         return new Book(
                 bookDto.getId(),
-                bookService.getBookTitle(bookDto.getBookTitleId()),
+                bookService.getBookTitle(bookDto.getBookTitle()),
                 bookDto.getBookStatusId(),
                 mapToBookHireList(bookDto.getBookHires())
         );
@@ -58,8 +57,8 @@ public class BookMapper {
     public BookHireDto mapToBookHireDto(final BookHire bookHire) {
         return new BookHireDto(
                 bookHire.getId(),
-                bookHire.getUserId().getId(),
-                bookHire.getBookId().getId(),
+                bookHire.getUser().getId(),
+                bookHire.getBook().getId(),
                 bookHire.getRentalDate(),
                 bookHire.getReturnDate()
         );
@@ -68,8 +67,8 @@ public class BookMapper {
     public BookHire mapToBookHire(final BookHireDto bookHireDto) throws BookNotFoundException, UserNotFoundException {
         return new BookHire(
                 bookHireDto.getId(),
-                userService.getUser(bookHireDto.getUserId()),
-                bookService.getBook(bookHireDto.getBookId()),
+                userService.getUser(bookHireDto.getUser()),
+                bookService.getBook(bookHireDto.getBook()),
                 bookHireDto.getRentalDate(),
                 bookHireDto.getReturnDate()
         );
@@ -82,9 +81,7 @@ public class BookMapper {
         for (BookHireDto book : booksHireDtoList) {
             booksHire.add(mapToBookHire(book));
         }
-
         return booksHire;
-
     }
 
     public List<BookHireDto> mapToBookHireDtoList(final List<BookHire> bookHireList) {
