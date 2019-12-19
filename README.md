@@ -13,6 +13,6 @@ Application which can be use as a system to manage books in university library.
 
 
 ### Tests
-- [h2](https://www.h2database.com/html/main.html
+- [h2](https://www.h2database.com/html/main.html)
 - [Gradle](https://gradle.org/)
-- [Selenium](https://www.seleniumhq.org/
+- [JUnit](https://maven.apache.org/)
