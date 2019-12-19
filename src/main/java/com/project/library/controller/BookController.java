@@ -23,15 +23,17 @@ public class BookController {
     @Autowired
     private BookService bookService;
 
+
     @RequestMapping(method = RequestMethod.POST, value = "/addBookTitle", consumes = APPLICATION_JSON_VALUE)
     public void addBookTitle (BookTitleDto bookTitleDto){
-        bookService.addBookTitle(bookMapper.mapToBookTitle(bookTitleDto));
+        bookService.saveBookTitle(bookMapper.mapToBookTitle(bookTitleDto));
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/addBookCopy", consumes = APPLICATION_JSON_VALUE)
     public void addBook (@RequestBody BookDto bookCopyDto) throws BookNotFoundException, UserNotFoundException, BookTitleNotFoundException {
         bookService.saveBook(bookMapper.mapToBook(bookCopyDto));
     }
+
 
     @RequestMapping(method =  RequestMethod.GET, value = "/getAvailableBooks")
     public List<BookDto> getAvailableBooks (@RequestParam String title){
