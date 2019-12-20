@@ -20,7 +20,6 @@ public class UserController {
     @Autowired
     private UserMapper userMapper;
 
-
     @RequestMapping(method = RequestMethod.POST, value = "/addUser", consumes = APPLICATION_JSON_VALUE )
     public void addUser (@RequestBody UserDto userDto) throws UserNotFoundException, BookNotFoundException {
         userService.saveUser(userMapper.mapToUser(userDto));
