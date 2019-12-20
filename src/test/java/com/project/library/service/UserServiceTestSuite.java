@@ -55,5 +55,4 @@ public class UserServiceTestSuite {
         //Then
         assertEquals(3, count);
     }
-
 }
