@@ -2,6 +2,9 @@
 
 Application which can be use as a system to manage books in university library. 
 
+## API Reference
+[Swagger API](https://salty-tor-41729.herokuapp.com/swagger-ui.html)
+
 ### Backend
 - [MySQL](https://www.mysql.com)
 - [Spring Boot](https://spring.io/projects/spring-boot)
