@@ -16,15 +16,12 @@ public class BookTitle {
     @Column(name = "id")
     private Long id;
 
-    @NotNull
     @Column(name = "title")
     private String title;
 
-    @NotNull
     @Column(name = "author")
     private String author;
 
-    @NotNull
     @Column(name = "yearOfPublication")
     private int yearOfPublication;
 

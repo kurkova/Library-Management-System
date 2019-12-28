@@ -4,20 +4,17 @@ import com.project.library.controller.Exception.BookNotFoundException;
 import com.project.library.controller.Exception.BookTitleNotFoundException;
 import com.project.library.controller.Exception.UserNotFoundException;
 import com.project.library.domain.*;
-
 import com.project.library.repository.BookHireRepository;
 import com.project.library.repository.BookRepository;
 import com.project.library.repository.BookTitleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-@Transactional
 public class BookService {
 
     @Autowired
@@ -32,7 +29,15 @@ public class BookService {
     @Autowired
     private UserService userService;
 
-    public BookTitle addBookTitle(BookTitle bookTitle) {
+    public BookTitle getBookTitle(Long id) throws BookTitleNotFoundException {
+        return bookTitleRepository.findById(id).orElseThrow(BookTitleNotFoundException::new);
+    }
+
+    public Book getBook(Long id) throws BookNotFoundException {
+        return bookRepository.findById(id).orElseThrow(BookNotFoundException::new);
+    }
+
+    public BookTitle saveBookTitle(BookTitle bookTitle) {
         return bookTitleRepository.save(bookTitle);
     }
 
@@ -48,33 +53,28 @@ public class BookService {
 
         if (bookTitle != null) {
             for (Book book : bookTitle.getBooks()) {
-                if (book.getBookStatus().equals(BookStatus.IN_LIBRARY)) {
+                if (book.getBookStatus().equals(BookStatus.AVAILABLE)) {
                     availableBooks.add(book);
                 }
-
             }
         }
         return availableBooks;
     }
 
-    public List<BookHire> getUserBooksHire(Long userId, Long bookHireId) {
-        bookHireRepository.findUsersBookHire(userId, bookHireId);
-        return new ArrayList<>();
-    }
 
     public void rentBook(Long userId, Long bookId) throws BookNotFoundException, UserNotFoundException {
         Book book = bookRepository.findById(bookId).orElseThrow(BookNotFoundException::new);
         User user = userService.getUser(userId);
 
 
-        if (book.getBookStatus().equals(BookStatus.IN_LIBRARY)) {
+        if (book.getBookStatus().equals(BookStatus.AVAILABLE)) {
             BookHire bookHire = new BookHire();
-            bookHire.setBookId(book);
-            bookHire.setUserId(user);
+            bookHire.setBook(book);
+            bookHire.setUser(user);
             bookHire.setRentalDate(LocalDate.now());
             bookHire.setReturnDate(LocalDate.now().plusDays(60));
             bookHireRepository.save(bookHire);
-            book.setBookStatus(BookStatus.LOANED);
+            book.setBookStatus(BookStatus.UNAVAILABLE);
             bookRepository.save(book);
         } else {
             throw new BookNotFoundException();
@@ -82,19 +82,11 @@ public class BookService {
     }
 
     public void returnBook(Long userId, Long bookId, BookStatus bookStatus) throws BookNotFoundException, UserNotFoundException {
-        BookHire bookHire = bookHireRepository.findUsersBookHire(userId, bookId).orElseThrow(BookNotFoundException::new);
-        Book book = bookHire.getBookId();
+        BookHire bookHire = bookHireRepository.findByUserIdAndBookId(userId, bookId).orElseThrow(BookNotFoundException::new);
+        Book book = bookHire.getBook();
         book.setBookStatus(bookStatus);
         bookHire.setReturnDate(LocalDate.now());
         bookRepository.save(book);
         bookHireRepository.save(bookHire);
-    }
-
-    public BookTitle getBookTitle(Long id) throws BookTitleNotFoundException {
-        return bookTitleRepository.findById(id).orElseThrow(BookTitleNotFoundException::new);
-    }
-
-    public Book getBook(Long id) throws BookNotFoundException {
-        return bookRepository.findById(id).orElseThrow(BookNotFoundException::new);
     }
 }

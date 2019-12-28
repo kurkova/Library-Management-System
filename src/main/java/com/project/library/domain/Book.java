@@ -17,12 +17,10 @@ public class Book {
     @Column(name ="id")
     private Long id;
 
-    @NotNull
     @ManyToOne
     @JoinColumn(name = "title_id")
     private BookTitle bookTitle;
 
-    @NotNull
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
     private BookStatus bookStatus;
@@ -32,5 +30,6 @@ public class Book {
             mappedBy = "book",
             fetch = FetchType.EAGER
     )
+
     private List<BookHire> bookHires;
 }

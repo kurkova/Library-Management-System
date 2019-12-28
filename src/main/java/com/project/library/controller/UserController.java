@@ -20,19 +20,19 @@ public class UserController {
     @Autowired
     private UserMapper userMapper;
 
-    @RequestMapping(method = RequestMethod.POST, value = "/addUser", consumes = APPLICATION_JSON_VALUE )
+    @RequestMapping(method = RequestMethod.POST, value = "/user", consumes = APPLICATION_JSON_VALUE )
     public void addUser (@RequestBody UserDto userDto) throws UserNotFoundException, BookNotFoundException {
         userService.saveUser(userMapper.mapToUser(userDto));
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/getUsers")
+    @RequestMapping(method = RequestMethod.GET, value = "/users")
     public List<UserDto> getUsers (){
        return  userMapper.mapToUserDtoList(userService.getAllUsers());
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/getUser")
-    public UserDto getUser (@RequestParam Long idUser) throws UserNotFoundException {
-        return userMapper.mapToUserDto(userService.getUser(idUser));
+    @RequestMapping(method = RequestMethod.GET, value = "/user/{userId}")
+    public UserDto getUser (@RequestParam Long userId) throws UserNotFoundException {
+        return userMapper.mapToUserDto(userService.getUser(userId));
     }
 }
 
