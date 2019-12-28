@@ -16,3 +16,7 @@ Application which can be use as a system to manage books in university library.
 - [h2](https://www.h2database.com/html/main.html)
 - [Gradle](https://gradle.org/)
 - [JUnit](https://maven.apache.org/)
+
+
+## Demo 
+- [LibraryManagementSystem](https://salty-tor-41729.herokuapp.com)
