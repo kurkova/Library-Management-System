@@ -1,6 +1,6 @@
 # LibraryManagementSystem
 
-Application which can be use as a system to manage books in university library. 
+Application which can be use as a system to manage books in library. 
 
 ## API Reference
 [Swagger API](https://salty-tor-41729.herokuapp.com/swagger-ui.html)
