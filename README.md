@@ -1,6 +1,9 @@
 # LibraryManagementSystem
 
-Application which can be use as a system to manage books in university library. 
+Application which can be use as a system to manage books in library. 
+
+## API Reference
+[Swagger API](https://salty-tor-41729.herokuapp.com/swagger-ui.html)
 
 ### Backend
 - [MySQL](https://www.mysql.com)
@@ -16,3 +19,7 @@ Application which can be use as a system to manage books in university library.
 - [h2](https://www.h2database.com/html/main.html)
 - [Gradle](https://gradle.org/)
 - [JUnit](https://maven.apache.org/)
+
+
+## Demo 
+- [LibraryManagementSystem](https://salty-tor-41729.herokuapp.com)
